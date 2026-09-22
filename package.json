@@ -1,0 +1,13 @@
+{
+  "name": "laundry-pickup-app",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix Backend run dev",
+    "backend": "npm --prefix Backend run dev",
+    "frontend": "npm --prefix Frontend run dev",
+    "start": "npm --prefix Backend run start",
+    "build": "npm --prefix Frontend run build",
+    "create-admin": "npm --prefix Backend run create-admin"
+  }
+}

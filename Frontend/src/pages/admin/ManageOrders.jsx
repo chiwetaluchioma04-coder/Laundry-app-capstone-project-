@@ -1,0 +1,6 @@
+import { useEffect, useState } from 'react'
+import { getOrders, updateOrderStatus } from '../../api/orderApi'
+import OrderCard from '../../components/order/OrderCard'
+import LoadingSpinner from '../../components/common/LoadingSpinner'
+const statuses = ['pending', 'processing', 'ready', 'delivered', 'cancelled']
+export default function ManageOrders() { const [orders, setOrders] = useState([]); const [loading, setLoading] = useState(true); useEffect(() => { getOrders().then(({ data }) => setOrders(data.data.orders)).finally(() => setLoading(false)) }, []); async function update(id, status) { const { data } = await updateOrderStatus(id, status); setOrders(orders.map((o) => o._id === id ? data.data.order : o)) } if (loading) return <LoadingSpinner />; return <main className="app-page page-shell"><div className="page-title"><p className="eyebrow">operations</p><h1>Orders</h1><p className="muted">Give every order its next good step.</p></div><div className="admin-list">{orders.map((order) => <div className="admin-row" key={order._id}><OrderCard order={order} /><select value={order.status} onChange={(e) => update(order._id, e.target.value)}>{statuses.map((status) => <option key={status}>{status}</option>)}</select></div>)}</div></main> }

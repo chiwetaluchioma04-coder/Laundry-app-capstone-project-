@@ -1,0 +1,21 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import Navbar from '../components/common/Navbar'
+import Footer from '../components/common/Footer'
+import ProtectedRoute from '../components/common/ProtectedRoute'
+import LandingPage from '../pages/public/LandingPage'
+import AboutPage from '../pages/public/AboutPage'
+import LoginPage from '../pages/public/LoginPage'
+import RegisterPage from '../pages/public/RegisterPage'
+import DashboardPage from '../pages/customer/DashboardPage'
+import SchedulePickupPage from '../pages/customer/SchedulePickupPage'
+import MyOrdersPage from '../pages/customer/MyOrdersPage'
+import OrderDetailPage from '../pages/customer/OrderDetailPage'
+import ProfilePage from '../pages/customer/ProfilePage'
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import ManagePickups from '../pages/admin/ManagePickups'
+import ManageOrders from '../pages/admin/ManageOrders'
+import ManageServices from '../pages/admin/ManageServices'
+
+function Layout() { return <><Navbar /><Routes><Route path="/" element={<LandingPage />} /><Route path="/about" element={<AboutPage />} /><Route path="/login" element={<LoginPage />} /><Route path="/register" element={<RegisterPage />} /><Route element={<ProtectedRoute />}><Route path="/dashboard" element={<DashboardPage />} /><Route path="/schedule" element={<SchedulePickupPage />} /><Route path="/orders" element={<MyOrdersPage />} /><Route path="/orders/:id" element={<OrderDetailPage />} /><Route path="/profile" element={<ProfilePage />} /></Route><Route element={<ProtectedRoute role="admin" />}><Route path="/admin" element={<AdminDashboard />} /><Route path="/admin/pickups" element={<ManagePickups />} /><Route path="/admin/orders" element={<ManageOrders />} /><Route path="/admin/services" element={<ManageServices />} /></Route><Route path="*" element={<Navigate to="/" replace />} /></Routes><Footer /></> }
+export default function AppRoutes() { return <BrowserRouter><Layout /></BrowserRouter> }
