@@ -1,8 +1,14 @@
 const User = require("../models/User");
 const { success, error } = require("../utils/apiResponse");
 
-const getProfile = async (req, res, next) => {
-  try { return success(res, { user: await User.findById(req.user.id) }); } catch (err) { return next(err); }
+
+// this gets 
+const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return error(res, "User not found", 404);
+    return success(res, { user }, "User found");
+  } catch (err) { return next(err); }
 };
 
 const updateProfile = async (req, res, next) => {
@@ -15,4 +21,18 @@ const updateProfile = async (req, res, next) => {
   } catch (err) { return next(err); }
 };
 
-module.exports = { getProfile, updateProfile };
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    return success(res, { users }, "Users found");
+  } catch (err) { return next(err); }
+};
+
+const getProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return error(res, "User not found", 404);
+    return success(res, { user }, "User found");
+  } catch (err) { return next(err); }
+};
+module.exports = { getUser, updateProfile, getAllUsers, getProfile };
