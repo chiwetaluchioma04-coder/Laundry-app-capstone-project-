@@ -1,0 +1,106 @@
+.admin-console, .wallet-page { max-width: 1080px; }
+.admin-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.refresh-button { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--white); color: var(--ink); }
+.admin-queue { margin-top: 38px; }
+.admin-queue .section-heading { margin-bottom: 16px; }
+.admin-queue .section-heading h2, .wallet-history .section-heading h2 { font-size: 1.45rem; }
+.queue-count { display: inline-grid; place-items: center; min-width: 26px; height: 26px; margin-left: 6px; padding: 0 6px; background: var(--yellow); font: 500 .72rem 'DM Mono', monospace; vertical-align: 3px; }
+.admin-review-list { display: grid; gap: 9px; }
+.admin-review-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 22px; padding: 19px; background: var(--white); border: 1px solid var(--line); }
+.review-main { min-width: 0; }
+.review-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 7px; }
+.review-main > p { margin: 5px 0 0; font-size: .78rem; }
+.review-total { display: grid; gap: 4px; white-space: nowrap; text-align: right; }
+.review-total strong { font-size: 1.15rem; }
+.review-total small, .wallet-history-row small { color: var(--muted); font-size: .7rem; }
+.transfer-reference { overflow-wrap: anywhere; }
+.review-actions { display: grid; gap: 7px; }
+.review-actions .button, .admin-review-row > .button { min-height: 39px; white-space: nowrap; font-size: .75rem; }
+.button-light { background: var(--paper-deep); color: var(--ink); }
+.transfer-panel { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 20px 40px; margin: 24px auto 0; max-width: 990px; padding: 28px; border: 1px solid var(--line); border-left: 5px solid var(--orange); background: var(--white); }
+.transfer-panel h2 { margin-bottom: 10px; font-size: 1.65rem; }
+.transfer-panel .eyebrow { margin-bottom: 10px; }
+.transfer-panel .muted { font-size: .85rem; line-height: 1.55; }
+.transfer-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; margin: 0; }
+.transfer-details > div { padding: 11px 0; border-bottom: 1px solid var(--line); }
+.transfer-details dt { color: var(--muted); font-size: .68rem; }
+.transfer-details dd { margin: 3px 0 0; font-weight: 700; overflow-wrap: anywhere; }
+.transfer-waiting { grid-column: 1 / -1; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: .78rem; }
+.order-status-stack { display: grid; justify-items: end; gap: 7px; }
+.wallet-balance { display: grid; justify-items: start; gap: 7px; margin-bottom: 16px; padding: 25px; background: var(--ink); color: var(--white); }
+.wallet-balance .round-icon { color: var(--ink); }
+.wallet-balance .eyebrow { margin: 8px 0 0; color: #c7d0c8; }
+.wallet-balance > strong { font-size: 2.4rem; line-height: 1.1; }
+.wallet-balance > small { color: #c7d0c8; font-size: .75rem; }
+.wallet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.wallet-grid .detail-panel { margin: 0; }
+.wallet-grid .panel-heading { margin-bottom: 19px; }
+.wallet-grid .panel-heading h2 { margin: 0; }
+.wallet-grid .button { width: 100%; }
+.wallet-help { margin: -7px 0 19px; font-size: .82rem; line-height: 1.5; }
+.wallet-history { margin-top: 38px; }
+.wallet-history-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 15px 18px; background: var(--white); border: 1px solid var(--line); border-bottom: 0; }
+.wallet-history-row:last-child { border-bottom: 1px solid var(--line); }
+.wallet-history-row > div { display: grid; gap: 4px; }
+.success-message { padding: 11px 13px; margin-bottom: 16px; border: 1px solid #b7c8a6; background: #e7eedf; color: #35502f; font-size: .82rem; }
+.status-processing { background: var(--blue); }
+.status-paid { background: var(--yellow); }
+.status-failed { background: #f4d2c7; }
+.order-badges { display: flex; flex-wrap: wrap; gap: 7px; }
+.order-history { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.order-history li { display: grid; grid-template-columns: 13px minmax(0, 1fr); gap: 11px; min-height: 54px; }
+.history-marker { width: 9px; height: 9px; margin-top: 5px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 3px var(--paper-deep); }
+.history-entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 3px 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.history-entry strong { text-transform: capitalize; }
+.history-entry time, .history-entry small { color: var(--muted); font-size: .72rem; }
+.history-entry small { grid-column: 1 / -1; }
+.order-view-tabs { display: flex; gap: 8px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.order-view-tabs button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); font-weight: 700; }
+.order-view-tabs button.selected { border-color: var(--orange); color: var(--ink); }
+.order-view-tabs button span { min-width: 21px; padding: 2px 5px; background: var(--paper-deep); font: 500 .66rem 'DM Mono', monospace; text-align: center; }
+.vendor-order-list { display: grid; gap: 12px; }
+.vendor-order-card { display: grid; gap: 18px; padding: 22px; background: var(--white); border: 1px solid var(--line); }
+.vendor-order-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; }
+.vendor-order-heading .eyebrow { margin-bottom: 6px; }
+.vendor-order-heading h2 { margin: 0; font-size: 1.3rem; }
+.vendor-order-facts { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; font-size: .82rem; }
+.vendor-order-facts span { overflow-wrap: anywhere; }
+.vendor-order-facts span:nth-child(2) { color: var(--muted); }
+.vendor-order-history { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.vendor-order-history h3 { margin: 0; font-size: .92rem; }
+.vendor-order-card > .button { justify-self: start; }
+.order-transfer-panel { margin-bottom: 14px; }
+.delivery-notifications { display: grid; gap: 7px; max-width: 1176px; margin: 0 auto 12px; padding: 0 32px; }
+.delivery-notification { display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: var(--yellow); border-left: 4px solid var(--orange); color: var(--ink); }
+.delivery-notification > svg { flex: 0 0 auto; color: var(--orange); }
+.delivery-notification p { flex: 1; margin: 0; font-size: .82rem; }
+.delivery-notification a { flex: 0 0 auto; font-weight: 700; font-size: .78rem; text-decoration: underline; text-underline-offset: 3px; }
+.delivery-schedule-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; align-items: start; }
+.delivery-schedule-panel h2 { margin: 0 0 8px; font-size: 1.35rem; }
+.delivery-schedule-panel .eyebrow { margin-bottom: 8px; }
+.delivery-schedule-panel .muted { font-size: .84rem; line-height: 1.5; }
+.delivery-schedule-form { display: grid; gap: 12px; }
+.delivery-schedule-form label { display: grid; gap: 7px; font-size: .8rem; font-weight: 700; }
+.delivery-schedule-form input { width: 100%; padding: 12px; border: 1px solid var(--line); background: var(--white); color: var(--ink); }
+.delivery-booked { grid-column: 1 / -1; margin: 0; padding: 12px; background: var(--yellow); font-size: .82rem; }
+.delivery-waiting { margin: 0; font-size: .83rem; }
+@media (max-width: 760px) {
+  .admin-title-row { align-items: flex-start; }
+  .admin-review-row { grid-template-columns: 1fr auto; gap: 13px; }
+  .admin-review-row > .button, .review-actions { grid-column: 1 / -1; }
+  .review-actions { grid-template-columns: 1fr 1fr; }
+  .review-total { text-align: right; }
+  .transfer-panel, .wallet-grid { grid-template-columns: 1fr; }
+  .transfer-panel { padding: 21px; gap: 18px; }
+  .transfer-waiting { grid-column: auto; }
+  .transfer-details { grid-template-columns: 1fr; }
+  .vendor-order-heading { flex-direction: column; }
+  .vendor-order-facts { grid-template-columns: 1fr; }
+  .vendor-order-history { grid-template-columns: 1fr; gap: 10px; }
+  .history-entry { grid-template-columns: 1fr; }
+  .delivery-notifications { padding: 0 20px; }
+  .delivery-notification { align-items: flex-start; flex-wrap: wrap; }
+  .delivery-notification p { flex-basis: calc(100% - 34px); }
+  .delivery-notification a { margin-left: 30px; }
+  .delivery-schedule-panel { grid-template-columns: 1fr; }
+}

@@ -1,6 +1,0 @@
-import { useEffect, useState } from 'react'
-import { getPickups, updatePickupStatus } from '../../api/pickupApi'
-import PickupCard from '../../components/pickup/PickupCard'
-import LoadingSpinner from '../../components/common/LoadingSpinner'
-const statuses = ['requested', 'assigned', 'picked_up', 'completed', 'cancelled']
-export default function ManagePickups() { const [pickups, setPickups] = useState([]); const [loading, setLoading] = useState(true); useEffect(() => { getPickups().then(({ data }) => setPickups(data.data.pickups)).finally(() => setLoading(false)) }, []); async function update(id, status) { const { data } = await updatePickupStatus(id, status); setPickups(pickups.map((p) => p._id === id ? data.data.pickup : p)) } if (loading) return <LoadingSpinner />; return <main className="app-page page-shell"><div className="page-title"><p className="eyebrow">operations</p><h1>Pickups</h1><p className="muted">Keep every handoff clear and on time.</p></div><div className="admin-list">{pickups.map((pickup) => <div className="admin-row" key={pickup._id}><PickupCard pickup={pickup} /><select value={pickup.status} onChange={(e) => update(pickup._id, e.target.value)}>{statuses.map((status) => <option key={status}>{status}</option>)}</select></div>)}</div></main> }

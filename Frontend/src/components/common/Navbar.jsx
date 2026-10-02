@@ -7,7 +7,7 @@ export default function Navbar() {
   const { user, logout } = useAuth()
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
-  const links = user?.role === 'admin' ? [['/admin', 'Control room']] : user ? [['/dashboard', 'Dashboard'], ['/orders', 'My orders']] : [['/about', 'How it works']]
+  const links = user?.role === 'vendor' ? [['/vendor/orders', 'Orders'], ['/vendor/pricing', 'Service prices'], ['/vendor/wallet', 'Wallet']] : user?.role === 'admin' ? [['/admin', 'Payments & payouts']] : user ? [['/dashboard', 'Dashboard'], ['/orders', 'My orders']] : [['/about', 'How it works']]
 
   return <header className="navbar">
     <Link className="brand" to="/" onClick={() => setOpen(false)}><span className="brand-mark">F</span><span>folded<span className="brand-dot">.</span></span></Link>
