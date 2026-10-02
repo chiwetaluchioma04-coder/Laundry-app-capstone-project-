@@ -5,4 +5,7 @@ npm-debug.log
 *.log
 .DS_Store
 Backend/docs.md
+<<<<<<< HEAD
 requests
+=======
+>>>>>>> e8482ed7615ba475b98d492e90eda645da7bbef8

@@ -21,5 +21,21 @@
   "devDependencies": {
     "nodemon": "^3.1.14"
   },
+<<<<<<< HEAD
+=======
+  "name": "backend-second-assignment-(fintech-app)",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "create-admin": "node src/scripts/createAdmin.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+>>>>>>> e8482ed7615ba475b98d492e90eda645da7bbef8
   "type": "commonjs"
 }

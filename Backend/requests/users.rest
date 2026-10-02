@@ -1,0 +1,29 @@
+@baseUrl = http://localhost:5000/api
+
+# Paste your JWT token here (obtained after logging in or registering):
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYmMxZjBmOGM3NDFmOGFkOGNhZGU0YSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc5MDcxMzc1MSwiZXhwIjoxNzkwODAwMTUxfQ.nW27zNA2eJRqi4SzFQOjNh2I9TaBdtEcBsDc-WJjusA
+
+### 1. Get Current User Profile (/me)
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{authToken}}
+
+### 2. Update Current User Profile (/me)
+PATCH {{baseUrl}}/users/me
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "phone": "+1987654321",
+  "address": "456 Oak Avenue, Apt 2B"
+}
+
+### 3. Get All Users
+GET {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
+
+### 4. Get Single User by ID
+# Replace with a valid User ObjectId
+@userId = 6abbe1feb04a0935294c1c5d
+GET {{baseUrl}}/users/{{userId}}
+Authorization: Bearer {{authToken}}
