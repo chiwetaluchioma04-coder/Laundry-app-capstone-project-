@@ -1,0 +1,43 @@
+.field-label-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.currency-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.currency-input > span {
+  padding-left: 14px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+}
+
+.currency-input input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.currency-input input:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.fee-note {
+  font-size: .78rem;
+  line-height: 1.5;
+  padding-top: 12px;
+}
+
+.checkout-total {
+  border-top: 1px solid var(--ink);
+  margin-top: 4px;
+  font-size: 1rem;
+}
