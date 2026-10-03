@@ -7,6 +7,9 @@ export default function ProtectedRoute({ role }) {
   const location = useLocation()
   if (loading) return <LoadingSpinner label="Checking your account" />
   if (!user) return <Navigate to="/login" state={{ from: location }} replace />
-  if (role && user.role !== role) return <Navigate to={user.role === 'vendor' ? '/vendor/pricing' : '/dashboard'} replace />
+  if (role && user.role !== role) {
+    const destination = user.role === 'admin' ? '/admin' : user.role === 'vendor' ? '/vendor/pricing' : '/dashboard'
+    return <Navigate to={destination} replace />
+  }
   return <Outlet />
 }

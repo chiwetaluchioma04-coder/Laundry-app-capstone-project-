@@ -11,7 +11,7 @@ const register = async (req, res, next) => {
     const fullName = req.body.fullName || req.body.name;
     const role = req.body.role || ROLES.CUSTOMER;
     if (!fullName?.trim()) return error(res, "Full name is required", 400);
-    if (!PUBLIC_ROLES.includes(role)) return error(res, "Role must be customer, vendor, or admin", 400);
+    if (!PUBLIC_ROLES.includes(role)) return error(res, "Role must be customer or vendor", 400);
 
     const user = await User.create({
       fullName,

@@ -14,11 +14,7 @@ const vendorPricingSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
   {
-<<<<<<< HEAD
     fullName: {
-=======
-    name: {
->>>>>>> e8482ed7615ba475b98d492e90eda645da7bbef8
       type: String,
       required: true,
       trim: true,
@@ -32,14 +28,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-<<<<<<< HEAD
       trim: true,
-=======
-      required: true,
-      unique: true,
-      trim: true,
-      // sparse: true // Add this if you have existing users in your DB without a phone number
->>>>>>> e8482ed7615ba475b98d492e90eda645da7bbef8
     },
     password: {
       type: String,
@@ -48,7 +37,6 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-<<<<<<< HEAD
       enum: Object.values(ROLES),
       default: ROLES.CUSTOMER,
     },
@@ -59,22 +47,6 @@ const userSchema = new mongoose.Schema(
     accountNumber: { type: String, trim: true },
     accountName: { type: String, trim: true },
     pricing: { type: vendorPricingSchema, default: undefined },
-=======
-      enum: ["customer", "vendor", "delivery_agent", "admin"],
-      default: "customer",
-    },
-    address: {
-      street: { type: String, trim: true },
-      city: { type: String, trim: true },
-      state: { type: String, trim: true },
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
->>>>>>> e8482ed7615ba475b98d492e90eda645da7bbef8
   },
   { timestamps: true }
 );
