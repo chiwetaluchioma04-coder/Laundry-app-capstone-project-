@@ -54,7 +54,6 @@ export default function CreateAccountPage() {
           <select name="role" value={form.role} onChange={update}>
             <option value="customer">Customer</option>
             <option value="vendor">Laundry vendor</option>
-            <option value="admin">Admin</option>
           </select>
         </label>
         <label>Full name<input name="name" value={form.name} onChange={update} placeholder="Your name" required /></label>

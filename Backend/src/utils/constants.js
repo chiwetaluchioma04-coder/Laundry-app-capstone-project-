@@ -4,7 +4,7 @@ const ROLES = Object.freeze({
   ADMIN: "admin",
 });
 
-const PUBLIC_ROLES = Object.freeze([ROLES.CUSTOMER, ROLES.VENDOR, ROLES.ADMIN]);
+const PUBLIC_ROLES = Object.freeze([ROLES.CUSTOMER, ROLES.VENDOR]);
 
 const SERVICE_TYPES = Object.freeze({
   wash_fold: Object.freeze({

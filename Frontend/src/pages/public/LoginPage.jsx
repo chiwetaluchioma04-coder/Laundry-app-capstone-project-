@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import ErrorMessage from '../../components/common/ErrorMessage'
 
 export default function LoginPage() {
-	const [form, setForm] = useState({ email: '', password: '', role: 'customer' })
+	const [form, setForm] = useState({ email: '', password: '' })
 	const [error, setError] = useState('')
 	const [busy, setBusy] = useState(false)
 	const { login } = useAuth()
@@ -47,13 +47,6 @@ export default function LoginPage() {
 					<p className="muted">Pick up where you left off.</p>
 				</div>
 				{error && <ErrorMessage message={error} />}
-				<label>Account type
-					<select name="role" value={form.role} onChange={update}>
-						<option value="customer">Customer</option>
-						<option value="vendor">Vendor</option>
-						<option value="admin">Admin</option>
-					</select>
-				</label>
 				<label>Email address<input name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" required /></label>
 				<label>Password<input name="password" type="password" value={form.password} onChange={update} placeholder="Your password" required /></label>
 				<button className="button button-dark full-button" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'} <ArrowRight size={17} /></button>

@@ -1,59 +1,51 @@
-require("dotenv").config();
+const path = require("node:path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 const mongoose = require("mongoose");
 const User = require("../models/User");
+const { ROLES } = require("../utils/constants");
 
-const [, , email, password, ...nameParts] = process.argv;
-const name = nameParts.join(" ") || "Laundry Admin";
-
-if (!email || !password) {
-  console.error("Usage: npm run create-admin -- admin@example.com password123 \"Admin Name\"");
-  process.exit(1);
-}
+const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+const password = process.env.ADMIN_PASSWORD;
+const fullName = process.env.ADMIN_NAME?.trim() || "Laundry Admin";
 
 async function createAdmin() {
+  if (!email || !password) {
+    throw new Error("Set ADMIN_EMAIL and ADMIN_PASSWORD in Backend/.env before running this script");
+  }
+  if (password.length < 6) {
+    throw new Error("ADMIN_PASSWORD must be at least 6 characters long");
+  }
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URI is not configured. Add it to Backend/.env");
   }
 
-  await mongoose.connect(process.env.MONGO_URI);
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    const existingUser = await User.findOne({ email });
 
-  const normalizedEmail = email.toLowerCase();
-  const existingUser = await User.findOne({ email: normalizedEmail });
-
-  if (existingUser) {
-    existingUser.role = "admin";
-    if (!existingUser.name || !existingUser.name.trim()) {
-      existingUser.name = name;
+    if (existingUser) {
+      existingUser.role = ROLES.ADMIN;
+      existingUser.password = password;
+      if (!existingUser.fullName?.trim()) existingUser.fullName = fullName;
+      await existingUser.save();
+      console.log(`Admin account updated: ${email}`);
+    } else {
+      const newUser = await User.create({
+        fullName,
+        email,
+        password,
+        role: ROLES.ADMIN,
+      });
+      console.log(`Admin created: ${newUser.email}`);
     }
-
-    await existingUser.save();
-    console.log(`Existing user promoted to admin: ${normalizedEmail}`);
-    return;
+  } finally {
+    if (mongoose.connection.readyState !== 0) await mongoose.disconnect();
   }
-
-  const newUser = await User.create({
-    name,
-    email: normalizedEmail,
-    password,
-    role: "admin",
-  });
-
-  console.log(`Admin created: ${newUser.email}`);
 }
 
 createAdmin()
-  .then(async () => {
-    await mongoose.disconnect();
-  })
-  .catch(async (err) => {
+  .catch((err) => {
     console.error(`Could not create admin: ${err.message}`);
-
-    try {
-      await mongoose.disconnect();
-    } catch (disconnectError) {
-      console.error(`Disconnect warning: ${disconnectError.message}`);
-    }
-
-    process.exit(1);
+    process.exitCode = 1;
   });
