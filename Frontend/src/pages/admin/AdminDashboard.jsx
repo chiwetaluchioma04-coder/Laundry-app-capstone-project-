@@ -56,7 +56,7 @@ export default function AdminDashboard() {
     <main className="app-page page-shell admin-console">
       <div className="page-title admin-title-row">
         <div>
-          <p className="eyebrow">folded operations</p>
+          <p className="eyebrow">FreshFold operations</p>
           <h1>Payments & payouts</h1>
           <p className="muted">Match incoming bank alerts before confirming payments. Record vendor transfers after crediting their accounts.</p>
         </div>

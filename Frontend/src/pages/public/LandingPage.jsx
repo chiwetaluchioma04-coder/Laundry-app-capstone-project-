@@ -13,7 +13,7 @@ export default function LandingPage() {
     <section className="hero page-shell">
       <div className="hero-copy"><p className="eyebrow">
       <span className="eyebrow-line" /> laundry, made lighter</p><h1>More time for living. <em>Less time at the sink.</em>
-      </h1><p className="hero-lede">Fresh Fold picks up your laundry, cleans it beautifully, and brings it back when you need it. Your week just got a little roomier.</p>
+      </h1><p className="hero-lede">FreshFold picks up your laundry, cleans it beautifully, and brings it back when you need it. Your week just got a little roomier.</p>
       <div className="hero-actions"><Link className="button button-dark" to="/register">Schedule a pickup <ArrowRight size={17} /></Link>
       <Link className="quiet-link" to="/about">See how it works <ArrowRight size={15} /></Link></div></div>
       <div className="hero-art"><img src={heroImage} alt="A man carrying a basket of folded laundry" width="512" height="512" /></div></section>
@@ -23,7 +23,7 @@ export default function LandingPage() {
     </section>
     <section className="page-shell intro-grid">
       <div>
-        <p className="eyebrow">the Fresh Fold way</p>
+        <p className="eyebrow">the FreshFold way</p>
         <h2>Careful with your clothes.<br /><em>Careful with your time.</em></h2></div>
         <div className="intro-copy"><p>We believe laundry should disappear into the background of your life. Tell us where and when, then get back to the things that matter.</p><Link className="text-link" to="/about">A better laundry routine <ArrowRight size={15} /></Link></div></section>
     <section className="service-band page-shell">

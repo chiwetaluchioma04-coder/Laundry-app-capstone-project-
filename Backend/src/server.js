@@ -6,7 +6,7 @@ const port = Number(process.env.PORT || 5000);
 
 connectDB()
   .then(() => {
-    app.listen(port, () => console.log(`Fresh Fold API listening on port ${port}`));
+    app.listen(port, () => console.log(`FreshFold API listening on port ${port}`));
   })
   .catch((err) => {
     console.error(`Unable to start server: ${err.message}`);

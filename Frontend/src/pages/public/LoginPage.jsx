@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import ErrorMessage from '../../components/common/ErrorMessage'
+import Brand from '../../components/common/Brand'
 
 export default function LoginPage() {
 	const [form, setForm] = useState({ email: '', password: '' })
@@ -35,7 +36,7 @@ export default function LoginPage() {
 	return (
 		<main className="auth-page">
 			<div className="auth-aside">
-				<span className="brand"><span className="brand-mark">F</span> folded<span className="brand-dot">.</span></span>
+				<Brand />
 				<h1>Your laundry,<br /><em>off your mind.</em></h1>
 				<p>Good clothes deserve good care. We make it easy to keep both.</p>
 			</div>
@@ -43,14 +44,14 @@ export default function LoginPage() {
 				<div className="auth-heading">
 					<span className="round-icon"><LockKeyhole size={18} /></span>
 					<p className="eyebrow">welcome back</p>
-					<h2>Sign in to Folded</h2>
+					<h2>Sign in to FreshFold</h2>
 					<p className="muted">Pick up where you left off.</p>
 				</div>
 				{error && <ErrorMessage message={error} />}
 				<label>Email address<input name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" required /></label>
 				<label>Password<input name="password" type="password" value={form.password} onChange={update} placeholder="Your password" required /></label>
 				<button className="button button-dark full-button" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'} <ArrowRight size={17} /></button>
-				<p className="form-foot">New to Folded? <Link to="/register">Create an account</Link></p>
+				<p className="form-foot">New to FreshFold? <Link to="/register">Create an account</Link></p>
 			</form>
 		</main>
 	)

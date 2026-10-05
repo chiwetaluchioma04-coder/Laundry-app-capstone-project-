@@ -1,7 +1,7 @@
 {
   "name": "fresh-fold-backend",
   "version": "1.0.0",
-  "description": "Fresh Fold laundry marketplace API",
+  "description": "FreshFold laundry marketplace API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

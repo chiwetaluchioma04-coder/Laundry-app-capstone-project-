@@ -1,14 +1,16 @@
 import { ArrowRight, CalendarClock, MapPin, ShoppingBag, Store } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../pricing.css'
 import ErrorMessage from '../../components/common/ErrorMessage'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
-import { createOrder } from '../../api/orderApi'
+import { createOrder, getOrder } from '../../api/orderApi'
 import { initializePayment } from '../../api/paymentApi'
 import { getVendorDirectory } from '../../api/vendorApi'
 import { useAuth } from '../../context/AuthContext'
 import '../../payment-flow.css'
+import PickupTimeSelect from '../../components/pickup/PickupTimeSelect'
+import { getTodayInBusinessZone, toBusinessDateTimeIso } from '../../utils/pickupSchedule'
 
 const services = {
   wash_fold: { label: 'Wash & fold', charges: [['washing', 'Washing']] },
@@ -21,6 +23,7 @@ const money = (amount) => `₦${Number(amount || 0).toLocaleString('en-NG')}`
 export default function CreateOrderPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const transferDetailsRef = useRef(null)
   const [vendors, setVendors] = useState([])
   const [feePercent, setFeePercent] = useState(10)
   const [loading, setLoading] = useState(true)
@@ -28,12 +31,15 @@ export default function CreateOrderPage() {
   const [error, setError] = useState('')
   const [draftOrderId, setDraftOrderId] = useState('')
   const [paymentDetails, setPaymentDetails] = useState(null)
+  const [paymentStatus, setPaymentStatus] = useState('pending')
+  const [paymentStatusError, setPaymentStatusError] = useState('')
   const [form, setForm] = useState({
     vendorId: '',
     serviceType: 'wash_fold',
     quantity: '1',
     pickupAddress: user?.address || '',
     pickupDate: '',
+    pickupTime: '',
   })
 
   useEffect(() => {
@@ -46,10 +52,42 @@ export default function CreateOrderPage() {
       .finally(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    if (paymentDetails) {
+      transferDetailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [paymentDetails])
+
+  useEffect(() => {
+    if (!paymentDetails || !draftOrderId || paymentStatus === 'paid') return undefined
+
+    let active = true
+    const refreshPaymentStatus = async () => {
+      try {
+        const { data } = await getOrder(draftOrderId)
+        if (active) {
+          setPaymentStatus(data.data.order.paymentStatus)
+          setPaymentStatusError('')
+        }
+      } catch {
+        if (active) setPaymentStatusError('Payment status could not be refreshed. We will keep checking.')
+      }
+    }
+
+    refreshPaymentStatus()
+    const intervalId = setInterval(refreshPaymentStatus, 5000)
+    return () => {
+      active = false
+      clearInterval(intervalId)
+    }
+  }, [draftOrderId, paymentDetails, paymentStatus])
+
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
     setDraftOrderId('')
     setPaymentDetails(null)
+    setPaymentStatus('pending')
+    setPaymentStatusError('')
   }
   const vendor = vendors.find((item) => item._id === form.vendorId)
   const service = services[form.serviceType]
@@ -79,7 +117,12 @@ export default function CreateOrderPage() {
     try {
       let orderId = draftOrderId
       if (!orderId) {
-        const { data } = await createOrder({ ...form, quantity })
+        const { pickupDate, pickupTime, ...orderDetails } = form
+        const { data } = await createOrder({
+          ...orderDetails,
+          quantity,
+          pickupDate: toBusinessDateTimeIso(pickupDate, pickupTime),
+        })
         orderId = data.data.order._id
         setDraftOrderId(orderId)
       }
@@ -129,8 +172,21 @@ export default function CreateOrderPage() {
             <textarea name="pickupAddress" value={form.pickupAddress} onChange={update} rows="2" required />
           </label>
           <label><span className="field-label-icon"><CalendarClock size={15} /> Pickup date and time</span>
-            <input name="pickupDate" type="datetime-local" value={form.pickupDate} onChange={update} required />
+            <input name="pickupDate" type="date" min={getTodayInBusinessZone()} value={form.pickupDate} onChange={update} required />
           </label>
+          <div className="pickup-time-fields">
+            <PickupTimeSelect
+              value={form.pickupTime}
+              onChange={(pickupTime) => {
+                setForm((current) => ({ ...current, pickupTime }))
+                setDraftOrderId('')
+                setPaymentDetails(null)
+                setPaymentStatus('pending')
+                setPaymentStatusError('')
+              }}
+            />
+          </div>
+          <p className="schedule-warning" role="note">Choose a pickup time between 9:00 AM and 6:00 PM Nigeria time. After booking, you can change the pickup date and time up to twice.</p>
         </section>
 
         <section className="detail-panel form-section">
@@ -143,7 +199,7 @@ export default function CreateOrderPage() {
               <div className="total-line"><span>Subtotal</span><strong>{money(subtotal)}</strong></div>
               <div className="line-item"><span>App fee ({feePercent}%)</span><strong>{money(appFee)}</strong></div>
               <div className="total-line checkout-total"><span>Total due</span><strong>{money(total)}</strong></div>
-              <p className="muted fee-note">The vendor also pays a separate {feePercent}% platform fee from their earnings after delivery.</p>
+
             </>
           ) : (
             <p className="muted">Select a vendor and enter the number of clothes to see your itemized total.</p>
@@ -155,20 +211,31 @@ export default function CreateOrderPage() {
         </section>
       </form>
       {paymentDetails && (
-        <section className="transfer-panel" aria-live="polite">
+        <section ref={transferDetailsRef} className="transfer-panel" aria-live="polite">
           <div>
             <p className="eyebrow">bank transfer</p>
-            <h2>Pay Folded directly</h2>
-            <p className="muted">Transfer the exact amount below. Use the payment reference as your narration so our team can match your alert.</p>
+            <h2>Complete your payment</h2>
+            <p className="muted">Transfer the exact amount below. Use the payment reference as your narration so our team can match your alert. NB: it takes 5-10 minutes for the payment to be confirmed.</p>
           </div>
           <dl className="transfer-details">
             <div><dt>Bank</dt><dd>{paymentDetails.transferDetails.bankName}</dd></div>
             <div><dt>Account name</dt><dd>{paymentDetails.transferDetails.accountName}</dd></div>
             <div><dt>Account number</dt><dd>{paymentDetails.transferDetails.accountNumber}</dd></div>
             <div><dt>Amount</dt><dd>{money(paymentDetails.amount)}</dd></div>
-            <div><dt>Payment reference</dt><dd>{paymentDetails.reference}</dd></div>
+            <div>
+              <dt>Payment reference</dt>
+              <dd className="payment-reference-row">
+                {paymentDetails.reference}
+                <span className={`status status-${paymentStatus}`} aria-live="polite">{paymentStatus === 'paid' ? 'Verified' : 'Pending'}</span>
+              </dd>
+            </div>
           </dl>
-          <p className="transfer-waiting">Your order stays pending until an admin confirms the payment in the bank account.</p>
+          <p className="transfer-waiting">
+            {paymentStatus === 'paid'
+              ? <>Your payment has been verified by an admin. <button className="button button-dark" type="button" onClick={() => navigate(`/orders/${draftOrderId}`)}>View order status</button></>
+              : 'Your order stays pending until an admin confirms the payment in the bank account.'}
+            {paymentStatusError && <span className="payment-status-error" role="status">{paymentStatusError}</span>}
+          </p>
         </section>
       )}
     </main>

@@ -6,6 +6,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner'
 import OrderHistory from '../../components/order/OrderHistory'
 import OrderTracker from '../../components/order/OrderTracker'
 import '../../payment-flow.css'
+import { formatPickupDateTime } from '../../utils/pickupSchedule'
 
 const flows = {
   wash_fold: ['received', 'washing', 'ready_for_delivery', 'delivered'],
@@ -81,7 +82,7 @@ export default function VendorOrdersPage() {
                 </div>
                 <div className="vendor-order-facts">
                   <span>{order.pickupAddress}</span>
-                  <span>{new Date(order.pickupDate).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</span>
+                  <span>{formatPickupDateTime(order.pickupDate)}</span>
                   <strong>{money(order.totalAmount)}</strong>
                 </div>
                 {order.deliverySchedule?.deliveryAt && <p className="delivery-booked">Delivery booked: <strong>{new Date(order.deliverySchedule.deliveryAt).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</strong></p>}

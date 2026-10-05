@@ -95,7 +95,7 @@ export default function VendorWalletPage() {
         </form>
         <form className="detail-panel profile-form" onSubmit={withdraw}>
           <div className="panel-heading"><CircleDollarSign size={19} /><h2>Request a withdrawal</h2></div>
-          <p className="muted wallet-help">Your request reserves the amount. Folded will mark it paid after the bank transfer is sent.</p>
+          <p className="muted wallet-help">Your request reserves the amount. FreshFold will mark it paid after the bank transfer is sent.</p>
           <label>Amount in naira
             <input name="amount" type="number" min={minimum} max={balance} step="1" value={amount} onChange={(event) => setAmount(event.target.value)} required />
           </label>

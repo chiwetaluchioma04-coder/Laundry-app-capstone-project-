@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import ErrorMessage from '../../components/common/ErrorMessage'
+import Brand from '../../components/common/Brand'
 
 export default function CreateAccountPage() {
   const [form, setForm] = useState({
@@ -38,16 +39,16 @@ export default function CreateAccountPage() {
   return (
     <main className="auth-page">
       <div className="auth-aside register-aside">
-        <span className="brand"><span className="brand-mark">F</span> folded<span className="brand-dot">.</span></span>
+        <Brand />
         <p className="eyebrow">a little more room in your day</p>
         <h1>Let’s make<br /><em>laundry lighter.</em></h1>
       </div>
       <form className="auth-card" onSubmit={submit}>
         <div className="auth-heading">
           <span className="round-icon"><UserRoundPlus size={18} /></span>
-          <p className="eyebrow">join folded</p>
+          <p className="eyebrow">join FreshFold</p>
           <h2>Create your account</h2>
-          <p className="muted">Choose how you’ll use Folded.</p>
+          <p className="muted">Choose how you’ll use FreshFold.</p>
         </div>
         {error && <ErrorMessage message={error} />}
         <label>Account type

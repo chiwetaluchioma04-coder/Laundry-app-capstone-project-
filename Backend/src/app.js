@@ -12,7 +12,7 @@ const { errorHandler, notFound } = require("./middlewares/error.middleware");
 const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
-app.get("/api/health", (req, res) => res.json({ success: true, message: "Fresh Fold API is running" }));
+app.get("/api/health", (req, res) => res.json({ success: true, message: "FreshFold API is running" }));
 
 app.use("/api/payments", paymentRoutes);
 app.use(express.json());

@@ -25,7 +25,10 @@
 .transfer-details > div { padding: 11px 0; border-bottom: 1px solid var(--line); }
 .transfer-details dt { color: var(--muted); font-size: .68rem; }
 .transfer-details dd { margin: 3px 0 0; font-weight: 700; overflow-wrap: anywhere; }
-.transfer-waiting { grid-column: 1 / -1; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: .78rem; }
+.transfer-waiting { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: .78rem; }
+.transfer-waiting .button { white-space: nowrap; }
+.payment-reference-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.payment-status-error { flex-basis: 100%; color: #a44730; }
 .order-status-stack { display: grid; justify-items: end; gap: 7px; }
 .wallet-balance { display: grid; justify-items: start; gap: 7px; margin-bottom: 16px; padding: 25px; background: var(--ink); color: var(--white); }
 .wallet-balance .round-icon { color: var(--ink); }
@@ -76,12 +79,25 @@
 .delivery-notification p { flex: 1; margin: 0; font-size: .82rem; }
 .delivery-notification a { flex: 0 0 auto; font-weight: 700; font-size: .78rem; text-decoration: underline; text-underline-offset: 3px; }
 .delivery-schedule-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; align-items: start; }
+.pickup-schedule-panel { display: grid; gap: 12px; }
+.pickup-schedule-panel h2 { margin-bottom: 8px; font-size: 1.35rem; }
+.pickup-schedule-panel .muted { font-size: .84rem; line-height: 1.5; }
+.schedule-warning { margin: 0; padding: 12px; border: 1px solid #e4d99b; background: #fff8cf; color: var(--ink); font-size: .82rem; line-height: 1.5; }
 .delivery-schedule-panel h2 { margin: 0 0 8px; font-size: 1.35rem; }
 .delivery-schedule-panel .eyebrow { margin-bottom: 8px; }
 .delivery-schedule-panel .muted { font-size: .84rem; line-height: 1.5; }
 .delivery-schedule-form { display: grid; gap: 12px; }
 .delivery-schedule-form label { display: grid; gap: 7px; font-size: .8rem; font-weight: 700; }
 .delivery-schedule-form input { width: 100%; padding: 12px; border: 1px solid var(--line); background: var(--white); color: var(--ink); }
+.pickup-time-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.pickup-time-fields label { display: grid; gap: 7px; margin-bottom: 17px; font-size: .8rem; font-weight: 700; }
+.pickup-time-fields select { width: 100%; }
+.pickup-period { min-width: 0; margin: 0 0 17px; padding: 0; border: 0; }
+.pickup-period legend { margin-bottom: 7px; font-size: .8rem; font-weight: 700; }
+.pickup-period-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pickup-period-options button { min-height: 44px; padding: 10px; border: 1px solid var(--line); background: var(--white); color: var(--ink); font: inherit; font-size: .8rem; cursor: pointer; }
+.pickup-period-options button.selected { border-color: var(--ink); background: var(--yellow); font-weight: 700; }
+.pickup-period-options button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .delivery-booked { grid-column: 1 / -1; margin: 0; padding: 12px; background: var(--yellow); font-size: .82rem; }
 .delivery-waiting { margin: 0; font-size: .83rem; }
 @media (max-width: 760px) {

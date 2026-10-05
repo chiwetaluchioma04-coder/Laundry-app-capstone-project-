@@ -23,7 +23,7 @@ export default function CustomerDashboardPage() {
   return (
     <main className="app-page page-shell">
       <div className="welcome-row">
-        <div><p className="eyebrow">your folded space</p><h1>Welcome, {user?.name?.split(' ')[0] || 'there'}<span className="brand-dot">.</span></h1><p className="muted">Your next clean start begins here.</p></div>
+        <div><p className="eyebrow">your FreshFold space</p><h1>Welcome, {user?.name?.split(' ')[0] || 'there'}<span className="brand-dot">.</span></h1><p className="muted">Your next clean start begins here.</p></div>
         <Link className="button button-yellow" to="/schedule"><Plus size={17} /> New order</Link>
       </div>
       <div className="stat-grid">
