@@ -1,7 +1,7 @@
 const express = require("express");
-const auth = require("../middleware/authMiddleware");
+const auth = require("../middlewares/auth.middleware");
 const { getProfile, updateProfile, getAllUsers, getUser } = require("../controllers/userController");
-const restrictTo = require("../middleware/roleMiddleware"); // this is imported to routes are protected
+const restrictTo = require("../middlewares/role.middleware");
 
 const router = express.Router();
 router.use(auth);

@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Clock3, Shirt, Sparkles } from 'lucide-react'
+import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import heroImage from '../../assets/hero.png'
 
