@@ -50,6 +50,9 @@ export default function LoginPage() {
 				{error && <ErrorMessage message={error} />}
 				<label>Email address<input name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" required /></label>
 				<label>Password<input name="password" type="password" value={form.password} onChange={update} placeholder="Your password" required /></label>
+				<div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+					<Link to="/forgot-password" style={{ color: '#007bff', textDecoration: 'none' }}>Forgot password?</Link>
+				</div>
 				<button className="button button-dark full-button" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'} <ArrowRight size={17} /></button>
 				<p className="form-foot">New to FreshFold? <Link to="/register">Create an account</Link></p>
 			</form>

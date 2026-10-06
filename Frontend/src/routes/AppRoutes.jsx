@@ -7,6 +7,7 @@ import DeliveryNotificationBanner from '../components/common/DeliveryNotificatio
 import LandingPage from '../pages/public/LandingPage'
 import AboutPage from '../pages/public/AboutPage'
 import LoginPage from '../pages/public/LoginPage'
+import ForgotPasswordPage from '../pages/public/ForgotPasswordPage'
 import CreateAccountPage from '../pages/public/CreateAccountPage'
 import CustomerDashboardPage from '../pages/customer/CustomerDashboardPage'
 import CreateOrderPage from '../pages/customer/CreateOrderPage'
@@ -28,6 +29,7 @@ function Layout() {
 			<Route path="/" element={<LandingPage />} />
 			<Route path="/about" element={<AboutPage />} />
 			<Route path="/login" element={<LoginPage />} />
+			<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 			<Route path="/register" element={<CreateAccountPage />} />
 			<Route element={<ProtectedRoute role="customer" />}>
 				<Route path="/dashboard" element={<CustomerDashboardPage />} />
