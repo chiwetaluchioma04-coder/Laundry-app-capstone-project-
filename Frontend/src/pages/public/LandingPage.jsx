@@ -1,14 +1,14 @@
 import { ArrowRight, Check, Clock3, Shirt, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { getServices } from '../../api/serviceApi'
 import heroImage from '../../assets/hero.png'
 
+const services = [
+  { name: 'Wash & fold', description: 'Everyday washing and careful folding.' },
+  { name: 'Wash, iron & fold', description: 'Washed, pressed and ready to wear.' },
+  { name: 'Dry cleaning', description: 'Specialist care for delicate garments.' },
+]
+
 export default function LandingPage() {
-  const [services, setServices] = useState([])
-
-  useEffect(() => { getServices().then(({ data }) => setServices(data.data.services)).catch(() => {}) }, [])
-
   return <main>
     <section className="hero page-shell">
       <div className="hero-copy"><p className="eyebrow">
@@ -29,7 +29,7 @@ export default function LandingPage() {
     <section className="service-band page-shell">
       <div className="section-heading"><div>
       <p className="eyebrow">popular services</p>
-      <h2>Clean, pressed, ready.</h2></div><Link className="text-link" to="/register">View all services <ArrowRight size={15} /></Link></div><div className="service-grid">{services.length ? services.slice(0, 3).map((service, index) => <div className="service-tile" key={service._id}><span className="service-number">0{index + 1}</span><h3>{service.name}</h3><p>{service.description || 'Thoughtful care for your everyday wardrobe.'}</p><strong>From ₦{Number(service.price).toLocaleString()}</strong></div>) : ['Wash & fold', 'Press & finish', 'Delicates'].map((name, index) => <div className="service-tile" key={name}><span className="service-number">0{index + 1}</span><h3>{name}</h3><p>Thoughtful care for your everyday wardrobe.</p><strong>Made to order</strong></div>)}</div></section>
+      <h2>Clean, pressed, ready.</h2></div><Link className="text-link" to="/register">View all services <ArrowRight size={15} /></Link></div><div className="service-grid">{services.map((service, index) => <div className="service-tile" key={service.name}><span className="service-number">0{index + 1}</span><h3>{service.name}</h3><p>{service.description}</p><strong>Vendor pricing at checkout</strong></div>)}</div></section>
     <section className="promise page-shell"><div className="promise-icon"><Sparkles /></div><div><p className="eyebrow">the little promise</p><h2>We treat every piece like it’s your favorite.</h2></div><ul><li><Check size={16} /> Easy pickup windows</li><li><Check size={16} /> Clear, upfront pricing</li><li><Check size={16} /> Care you can feel</li></ul></section>
   </main>
 }
