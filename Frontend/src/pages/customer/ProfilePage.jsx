@@ -1,5 +1,24 @@
-import { useState } from 'react'
-import { updateProfile } from '../../api/authApi'
 import { useAuth } from '../../context/AuthContext'
-import { ArrowRight, UserRound } from 'lucide-react'
-export default function ProfilePage() { const { user } = useAuth(); const [form, setForm] = useState({ name: user.name || '', phone: user.phone || '', address: user.address || '' }); const [saved, setSaved] = useState(false); const update = (e) => setForm({ ...form, [e.target.name]: e.target.value }); async function submit(e) { e.preventDefault(); await updateProfile(form); setSaved(true); setTimeout(() => setSaved(false), 2500) } return <main className="app-page page-shell narrow-content"><div className="page-title"><p className="eyebrow">your details</p><h1>Profile</h1><p className="muted">Keep your pickup information current.</p></div><form className="detail-panel profile-form" onSubmit={submit}><span className="round-icon"><UserRound size={18} /></span><label>Full name<input name="name" value={form.name} onChange={update} required /></label><label>Phone number<input name="phone" value={form.phone} onChange={update} /></label><label>Default address<textarea name="address" value={form.address} onChange={update} rows="3" /></label><button className="button button-dark">{saved ? 'Saved' : 'Save changes'} <ArrowRight size={16} /></button></form></main> }
+import { UserRound } from 'lucide-react'
+
+export default function ProfilePage() {
+  const { user } = useAuth()
+
+  return (
+    <main className="app-page page-shell narrow-content">
+      <div className="page-title">
+        <p className="eyebrow">your details</p>
+        <h1>Profile</h1>
+        <p className="muted">Your account details used for FreshFold orders.</p>
+      </div>
+      <section className="detail-panel profile-form">
+        <span className="round-icon"><UserRound size={18} /></span>
+        <label>Full name<input value={user?.fullName || user?.name || ''} readOnly /></label>
+        <label>Email address<input value={user?.email || ''} readOnly /></label>
+        <label>Phone number<input value={user?.phone || ''} readOnly /></label>
+        <label>Default address<textarea value={user?.address || ''} rows="3" readOnly /></label>
+        <p className="muted">Profile editing is not available in the current account API.</p>
+      </section>
+    </main>
+  )
+}

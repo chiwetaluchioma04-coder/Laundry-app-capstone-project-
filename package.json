@@ -9,5 +9,8 @@
     "start": "npm --prefix Backend run start",
     "build": "npm --prefix Frontend run build",
     "create-admin": "npm --prefix Backend run create-admin"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
