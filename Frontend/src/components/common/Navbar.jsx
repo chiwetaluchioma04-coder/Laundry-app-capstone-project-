@@ -15,7 +15,10 @@ export default function Navbar() {
     <button className="icon-button mobile-menu" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X size={20} /> : <Menu size={20} />}</button>
     <nav className={open ? 'nav-links open' : 'nav-links'}>
       {links.map(([to, label]) => <NavLink key={to} to={to} onClick={() => setOpen(false)}>{label}</NavLink>)}
-      {user ? <button className="nav-logout" onClick={() => { logout(); navigate('/') }}><LogOut size={15} /> Sign out</button> : <Link className="nav-cta" to="/login" onClick={() => setOpen(false)}>Get started <ArrowUpRight size={16} /></Link>}
+      {user ? <button className="nav-logout" onClick={() => { logout(); navigate('/') }}><LogOut size={15} /> Sign out</button> : <>
+        <Link to="/admin/login" onClick={() => setOpen(false)}>Admin sign in</Link>
+        <Link className="nav-cta" to="/login" onClick={() => setOpen(false)}>Get started <ArrowUpRight size={16} /></Link>
+      </>}
     </nav>
   </header>
 }
