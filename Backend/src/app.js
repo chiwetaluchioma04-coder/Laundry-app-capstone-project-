@@ -7,6 +7,7 @@ const paymentRoutes = require("./routes/payment.routes");
 const vendorRoutes = require("./routes/vendor.routes");
 const walletRoutes = require("./routes/wallet.routes");
 const adminRoutes = require("./routes/admin.routes");
+const userRoutes = require("./routes/userRoutes");
 const { errorHandler, notFound } = require("./middlewares/error.middleware");
 
 const app = express();
@@ -21,6 +22,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/vendor", vendorRoutes);
 app.use("/api/wallet", walletRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
