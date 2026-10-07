@@ -31,7 +31,7 @@ function Layout() {
 			<Route path="/" element={<LandingPage />} />
 			<Route path="/about" element={<AboutPage />} />
 			<Route path="/login" element={<LoginPage />} />
-			<Route path="/admin/login" element={<LoginPage adminOnly />} />
+			<Route path="/admin/login" element={<Navigate to="/login" replace />} />
 			<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 			<Route path="/reset-password" element={<ForgotPasswordPage />} />
 			<Route path="/register" element={<CreateAccountPage />} />
