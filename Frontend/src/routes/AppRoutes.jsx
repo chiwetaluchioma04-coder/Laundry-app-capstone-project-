@@ -22,7 +22,7 @@ import AdminDashboard from '../pages/admin/AdminDashboard'
 function Layout() {
 	const { user } = useAuth()
 	const location = useLocation()
-	const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].includes(location.pathname)
+	const isAuthPage = ['/login', '/admin/login', '/register', '/forgot-password', '/reset-password'].includes(location.pathname)
 
 	return <>
 		{!isAuthPage && <Navbar />}
@@ -31,6 +31,7 @@ function Layout() {
 			<Route path="/" element={<LandingPage />} />
 			<Route path="/about" element={<AboutPage />} />
 			<Route path="/login" element={<LoginPage />} />
+			<Route path="/admin/login" element={<LoginPage adminOnly />} />
 			<Route path="/forgot-password" element={<ForgotPasswordPage />} />
 			<Route path="/reset-password" element={<ForgotPasswordPage />} />
 			<Route path="/register" element={<CreateAccountPage />} />

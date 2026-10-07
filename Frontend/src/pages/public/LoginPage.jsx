@@ -5,11 +5,11 @@ import { useAuth } from '../../context/AuthContext'
 import ErrorMessage from '../../components/common/ErrorMessage'
 import Brand from '../../components/common/Brand'
 
-export default function LoginPage() {
+export default function LoginPage({ adminOnly = false }) {
 	const [form, setForm] = useState({ email: '', password: '' })
 	const [error, setError] = useState('')
 	const [busy, setBusy] = useState(false)
-	const { login } = useAuth()
+	const { login, logout } = useAuth()
 	const navigate = useNavigate()
 	const location = useLocation()
 	const update = (event) => setForm({ ...form, [event.target.name]: event.target.value })
@@ -19,7 +19,12 @@ export default function LoginPage() {
 		setBusy(true)
 		setError('')
 		try {
-			const user = await login(form)
+			const user = await login(adminOnly ? { ...form, role: 'admin' } : form)
+			if (adminOnly && user.role !== 'admin') {
+				logout()
+				setError('This account does not have administrator access.')
+				return
+			}
 			const destination = user.role === 'admin'
 				? '/admin'
 				: user.role === 'vendor'
@@ -43,9 +48,9 @@ export default function LoginPage() {
 			<form className="auth-card" onSubmit={submit}>
 				<div className="auth-heading">
 					<span className="round-icon"><LockKeyhole size={18} /></span>
-					<p className="eyebrow">welcome back</p>
-					<h2>Sign in to FreshFold</h2>
-					<p className="muted">Pick up where you left off.</p>
+					<p className="eyebrow">{adminOnly ? 'administrator access' : 'welcome back'}</p>
+					<h2>{adminOnly ? 'Admin sign in' : 'Sign in to FreshFold'}</h2>
+					<p className="muted">{adminOnly ? 'Sign in with an administrator account.' : 'Pick up where you left off.'}</p>
 				</div>
 				{error && <ErrorMessage message={error} />}
 				<label>Email address<input name="email" type="email" value={form.email} onChange={update} placeholder="you@example.com" required /></label>
@@ -54,7 +59,9 @@ export default function LoginPage() {
 					<Link to="/forgot-password" style={{ color: '#007bff', textDecoration: 'none' }}>Forgot password?</Link>
 				</div>
 				<button className="button button-dark full-button" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'} <ArrowRight size={17} /></button>
-				<p className="form-foot">New to FreshFold? <Link to="/register">Create an account</Link></p>
+				{adminOnly
+					? <p className="form-foot">Customer or vendor? <Link to="/login">Use regular sign in</Link></p>
+					: <p className="form-foot">New to FreshFold? <Link to="/register">Create an account</Link></p>}
 			</form>
 		</main>
 	)
