@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
@@ -21,15 +21,18 @@ import AdminDashboard from '../pages/admin/AdminDashboard'
 
 function Layout() {
 	const { user } = useAuth()
+	const location = useLocation()
+	const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].includes(location.pathname)
 
 	return <>
-		<Navbar />
-		{user?.role === 'customer' && <DeliveryNotificationBanner />}
+		{!isAuthPage && <Navbar />}
+		{!isAuthPage && user?.role === 'customer' && <DeliveryNotificationBanner />}
 		<Routes>
 			<Route path="/" element={<LandingPage />} />
 			<Route path="/about" element={<AboutPage />} />
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+			<Route path="/reset-password" element={<ForgotPasswordPage />} />
 			<Route path="/register" element={<CreateAccountPage />} />
 			<Route element={<ProtectedRoute role="customer" />}>
 				<Route path="/dashboard" element={<CustomerDashboardPage />} />
@@ -48,7 +51,7 @@ function Layout() {
 			</Route>
 			<Route path="*" element={<Navigate to="/" replace />} />
 		</Routes>
-		<Footer />
+		{!isAuthPage && <Footer />}
 	</>
 }
 

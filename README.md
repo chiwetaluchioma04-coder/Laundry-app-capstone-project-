@@ -4,7 +4,11 @@ Laundry marketplace MVP with customer orders, direct bank transfers, admin payme
 
 ## Backend Setup
 
-From `Backend/`, install packages with `npm install` and create `.env` using `.env-example` as a reference. Set `PORT`, `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `PAYMENT_BANK_NAME`, `PAYMENT_ACCOUNT_NAME`, `PAYMENT_ACCOUNT_NUMBER`, `PLATFORM_FEE_PERCENT`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`; `ADMIN_NAME` is optional and defaults to `Laundry Admin`. Choose a strong admin password and keep it only in `Backend/.env`. On startup, the API creates an admin account if none exists; the password is hashed before it is saved in MongoDB. Run `npm run create-admin` only when you need to create or update the configured admin account manually. Payment verification uses conditional, retryable state changes, and each wallet adjustment is atomic and idempotent, so standalone MongoDB works without multi-document transactions.
+From `Backend/`, install packages with `npm install` and create `.env`. Set `PORT`, `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `PAYMENT_BANK_NAME`, `PAYMENT_ACCOUNT_NAME`, `PAYMENT_ACCOUNT_NUMBER`, `PLATFORM_FEE_PERCENT`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`; `ADMIN_NAME` is optional and defaults to `Laundry Admin`. To enable password recovery, also set `SMTP_HOST`, `SMTP_PORT` (normally `587`), `SMTP_SECURE` (`false` for STARTTLS on port 587, `true` for implicit TLS on port 465), `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, and `FRONTEND_URL` (the deployed Vercel origin). Configure these as environment variables on Render as well. Choose a strong admin password and keep secrets only in the backend environment. On startup, the API creates an admin account if none exists; the password is hashed before it is saved in MongoDB. Run `npm run create-admin` only when you need to create or update the configured admin account manually. Payment verification uses conditional, retryable state changes, and each wallet adjustment is atomic and idempotent, so standalone MongoDB works without multi-document transactions.
+
+## Frontend Deployment
+
+When deploying the frontend to Vercel and the API to Render, set the Vercel environment variable `VITE_API_URL` to the Render service URL (for example, `https://your-api.onrender.com`). The frontend adds the `/api` prefix automatically; a value that already ends in `/api` is also accepted. Redeploy the frontend after changing the variable. Without it, the frontend uses the same-origin `/api` path, which requires a proxy or rewrite to the backend.
 
 The API listens on `PORT` (default `5000`) and exposes `/api/health`. All application endpoints use the `/api` prefix. Customers transfer directly to the configured FreshFold bank account and include the generated payment reference as the transfer narration. An admin checks the bank alert and verifies the payment in the control room; only then is the order scheduled and the vendor's net earnings credited to their wallet. Vendor withdrawals reserve the requested amount and remain pending until an admin has made the bank transfer and marks the request paid. Marking a request failed refunds the reserved amount to the vendor wallet.
 
@@ -19,6 +23,7 @@ Vendors save their per-cloth `washing`, `ironing`, and `dryCleaning` rates plus 
 ## API Endpoints
 
 - `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`
+- `POST /api/auth/forgot-password`, `POST /api/auth/reset-password`
 - `POST /api/orders`, `GET /api/orders`, `GET /api/orders/:id`
 - `PATCH /api/orders/:id/delivery-schedule`
 - `POST /api/payments/initialize`
